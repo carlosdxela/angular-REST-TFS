@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import {TfsRespProjects} from './tfs-resp-classes/tfs-resp-projects';
 import {catchError, map, tap} from 'rxjs/operators';
 
@@ -32,25 +33,11 @@ export class HttpService {
   public getProjectsfromTFS():Observable<TfsRespProjects>{
     //console.log("api URL:"+this.apiURL + " headers: " + this.headers;
     let projectsURL = this.apiURL + "projects?api-version=2.0";
-    return this.http.get<TfsRespProjects>(projectsURL,{headers:this.headers})
-    // .subscribe(data=>{
-    //   //need to do something more with the data
-    //   console.log(data);
-    //   console.log("Found "+data.count + " projects.");
-    //   //return data;
-    //
-    // }, (err:HttpErrorResponse)=>{
-    //   if (err.error instanceof Error){
-    //     console.log('Client-side error occurred.', err);
-    //   } else{
-    //     console.log('Server-side error occurred.\n',err);
-    //   }
-    // }
+    return this.http.get<TfsRespProjects>(projectsURL,{headers:this.headers});
+    // .pipe(
+    //   tap(projects => console.log('get projects')),
+    //   catchError(this.handleError('getProjectsfromTFS',[]))
     // )
-    .pipe(
-      tap(projects => console.log('get projects')),
-      catchError(this.handleError('getProjectsfromTFS',[]))
-    )
   }
 
   public getPDBProjects():void{
