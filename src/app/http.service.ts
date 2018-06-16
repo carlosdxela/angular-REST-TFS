@@ -48,6 +48,7 @@ export class HttpService {
     // }
     // )
     .pipe(
+      tap(projects => console.log('get projects')),
       catchError(this.handleError('getProjectsfromTFS',[]))
     )
   }

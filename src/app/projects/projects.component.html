@@ -1,0 +1,33 @@
+<p>
+  projects works!
+</p>
+<div *ngIf="projects">
+  <h2>
+    Number of projects: {{projects.count}}
+  </h2>
+  <table>
+    <tr>
+      <th>
+        ID
+      </th>
+      <th>
+        Name
+      </th>
+      <th>
+        URL
+      </th>
+    </tr>
+    <tr *ngFor="let project of projects.value">
+      <td>
+        {{project.id}}
+      </td>
+      <td>
+        {{project.name}}
+      </td>
+      <td>
+        {{project.url}}
+      </td>
+
+    </tr>
+  </table>
+</div>

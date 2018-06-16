@@ -1,8 +1,6 @@
 export class TfsRespProjects {
   count: number;
-  value: TfsRespProjectItem[];
-
-  
+  value: TfsRespProjectItem[];  
 }
 
 class TfsRespProjectItem {
