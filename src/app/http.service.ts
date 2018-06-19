@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs';
 import {TfsRespProjects} from './tfs-resp-classes/tfs-resp-projects';
+import {TfsRespWiql} from './tfs-resp-classes/tfs-resp-wiql';
+import {TfsReqQuery} from './tfs-resp-classes/tfs-req-query';
 import {catchError, map, tap} from 'rxjs/operators';
 
 @Injectable({
@@ -40,9 +42,17 @@ export class HttpService {
     // )
   }
 
-  public getPDBProjects():void{
+  public getPDBProjects():Observable<TfsRespWiql>{
     let pdbprojectsURL = this.apiURL + "wit/wiql?api-version=2.0";
+    let wiqlQuery = new TfsReqQuery();
+    wiqlQuery.query ="SELECT [System.Id], [Microsoft.GPE.ProjectInformation.GPETFSLocation], [Microsoft.GPE.ProjectInformation.ReleaseIterationPath], [Microsoft.GPE.ProjectInformation.Platform], [System.Title], [Microsoft.GPE.ProjectInformation.Schedule.RTX], [Microsoft.GPE.ProjectInformation.Schedule.Shelf] FROM WorkItems WHERE [System.TeamProject] = 'GPE_Games'  AND  [System.WorkItemType] = 'Project'  AND  [Microsoft.GPE.ProjectInformation.Status] = 'Production'  AND  [Microsoft.GPE.LocFinished] <> True ORDER BY [System.Id]";
+    return this.http.post<TfsRespWiql>(pdbprojectsURL,wiqlQuery,{headers:this.headers});
+  }
 
+  public getWorkitems(wiqlids:string,wiqfields:string):Observable<any>{
+    let pdbwiqlURL:string;
+    pdbwiqlURL = this.apiURL + "wit/workitems?ids=" + wiqlids + "&fields=" + wiqfields + "&api-version=2.0";
+    return this.http.get(pdbwiqlURL,{headers:this.headers});
   }
 
   /**
