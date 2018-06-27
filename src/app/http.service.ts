@@ -42,10 +42,10 @@ export class HttpService {
     // )
   }
 
-  public getPDBProjects():Observable<TfsRespWiql>{
+  public getPDBProjects(str_query:string):Observable<TfsRespWiql>{
     let pdbprojectsURL = this.apiURL + "wit/wiql?api-version=2.0";
     let wiqlQuery = new TfsReqQuery();
-    wiqlQuery.query ="SELECT [System.Id], [Microsoft.GPE.ProjectInformation.GPETFSLocation], [Microsoft.GPE.ProjectInformation.ReleaseIterationPath], [Microsoft.GPE.ProjectInformation.Platform], [System.Title], [Microsoft.GPE.ProjectInformation.Schedule.RTX], [Microsoft.GPE.ProjectInformation.Schedule.Shelf] FROM WorkItems WHERE [System.TeamProject] = 'GPE_Games'  AND  [System.WorkItemType] = 'Project'  AND  [Microsoft.GPE.ProjectInformation.Status] = 'Production'  AND  [Microsoft.GPE.LocFinished] <> True ORDER BY [System.Id]";
+    wiqlQuery.query =str_query;//"SELECT [System.Id] FROM WorkItems WHERE [System.TeamProject] = 'GPE_Games'  AND  [System.WorkItemType] = 'Project'  AND  [Microsoft.GPE.ProjectInformation.Status] = 'Production'  AND  [Microsoft.GPE.LocFinished] <> True ORDER BY [System.Id]";
     return this.http.post<TfsRespWiql>(pdbprojectsURL,wiqlQuery,{headers:this.headers});
   }
 

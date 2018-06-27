@@ -4,11 +4,17 @@
 <div>
   <table>
     <tr>
+      <th>
+        #&nbsp;
+      </th>
       <th *ngFor="let header of workitemFieldsList">
-        {{header}}
+        {{header}}&nbsp;|&nbsp;
       </th>
     </tr>
     <tr *ngFor="let item of witFields; let i=index" [attr.data-index]="i">
+      <td>
+        {{i}} / {{witFields.length}}
+      </td>
       <td *ngFor="let val of workitemFieldsList; let j=index" [attr.data-index]="j">
         {{witFields[i][j]}}
       </td>
